@@ -7,7 +7,23 @@ import { ISolution } from "../ISolution.sol";
 
 contract HammingDistance is IHammingDistance, ISolution {
     function solve(uint[] calldata a) external returns (uint) {
-        return 0;
+        uint tot = 0;
+        for (uint b = 0; b < 30; b++){
+            uint c0 = 0;
+            uint c1 = 0; 
+            for (uint256 i = 0; i < a.length; i++){
+                if ((a[i] & (uint256(1) << b)) > 0){
+                    c1++;
+                }
+                else{
+                    c0++;
+                }
+            }
+
+            tot += c0 * c1;
+        }
+
+        return tot; 
     }
 
     function getProblemName() external view returns (string memory){

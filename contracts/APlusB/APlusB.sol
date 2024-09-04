@@ -6,7 +6,7 @@ import {ISolution} from "../ISolution.sol";
 
 contract APlusB is IAPlusB, ISolution {
     function solve(uint a, uint b) external pure returns (uint) {
-        return 0;
+        return a + b; 
     }
 
     function getProblemName() external view returns (string memory){

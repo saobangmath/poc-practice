@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import { ISplitArray } from "./ISplitArray.sol";
 import { ISolution } from "../ISolution.sol";
 
-contract Rotation is ISplitArray, ISolution {
+contract SplitArray is ISplitArray, ISolution {
     function solve(uint[] calldata a, uint k) external returns (uint) {
         return 0;
     }
