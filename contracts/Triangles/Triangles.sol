@@ -6,7 +6,7 @@ import { ISolution } from "../ISolution.sol";
 
 
 contract Triangles is ITriangles, ISolution {
-    function _max(uint a, uint b, uint c) private pure returns (uint){
+    function _max(uint256 a, uint256 b, uint256 c) private pure returns (uint256){
         if (a >= b && a >= c){
             return a;
         }
@@ -21,13 +21,42 @@ contract Triangles is ITriangles, ISolution {
     function solve(uint256[] calldata a) external pure returns (uint256) {
         uint256 n = a.length;
         uint256 tot = 0;
+        uint256[] memory data = new uint256[](n); 
         for (uint256 i = 0; i < n; i++){
+            data[i] = a[i];
+        }
+
+        for (uint256 i = 0; i < n-1; i++){
+            uint256 index = i; 
             for (uint256 j = i+1; j < n; j++){
-                for (uint256 k = j + 1; k < n; k++){
-                    if (a[i] + a[j] + a[k] > _max(a[i], a[j], a[k]) * 2) {
-                        tot++; 
+                if (data[j] < data[index]){
+                    index = j;
+                }
+            }
+
+            uint256 tmp = data[index];
+            data[index] = data[i];
+            data[i] = tmp; 
+        }
+
+        for (uint256 k = 2; k < n; k++){
+            uint256 j = k - 1;
+            for (uint256 i = 0; i < k - 1; i++){
+                while (i < j){
+                    if (data[i] + data[j] > data[k]){
+                        j--; 
+                    }
+                    else{
+                        break; 
                     }
                 }
+
+                uint256 start = i;
+                if (j > start){
+                    start = j;
+                }
+
+                tot += k - 1 - start;
             }
         }
 

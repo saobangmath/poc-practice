@@ -6,7 +6,7 @@ import {ISolution} from "../../ISolution.sol";
 
 contract ProductKInteger is IProductKInteger, ISolution {
     function solve(int256[] calldata a, uint256 k) external returns (uint256) {
-        return 1; 
+        
     }
 
     function getProblemName() external view returns (string memory){

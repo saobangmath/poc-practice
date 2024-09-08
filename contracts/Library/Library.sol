@@ -7,15 +7,14 @@ import { ISolution } from "../ISolution.sol";
 contract Library is ILibrary, ISolution { 
     function solve(uint256[] memory a, uint256[] memory u, uint256[] memory v) external pure returns (uint256) {        
         uint256 n = a.length; 
-        uint256 m = u.length;
-        uint256[] memory dad = new uint256[](n + 10); 
-        uint256[] memory val = new uint256[](n + 10); 
+        uint256[] memory dad = new uint256[](n); 
+        uint256 tot = 0;
         for (uint256 i = 0; i < n; i++){
             dad[i] = i;
-            val[i] = a[i]; 
+            tot += a[i];
         }
 
-        for (uint256 i = 0; i < m; i++){
+        for (uint256 i = 0; i < u.length; i++){
             uint256 x = u[i];
             uint256 y = v[i]; 
             while (x != dad[x]){
@@ -31,15 +30,12 @@ contract Library is ILibrary, ISolution {
             }
 
             dad[x] = y; 
-            if (val[y] > val[x]){
-                val[y] = val[x]; 
+            if (a[y] > a[x]){
+                tot -= a[y];
+                a[y] = a[x]; 
             }
-        }
-
-        uint256 tot = 0;
-        for (uint256 i = 0; i < n; i++){
-            if (dad[i] == i){
-                tot += val[i];
+            else{
+                tot -= a[x]; 
             }
         }
 
