@@ -8,9 +8,11 @@ contract Library is ILibrary, ISolution {
     function solve(uint256[] memory a, uint256[] memory u, uint256[] memory v) external pure returns (uint256) {        
         uint256 n = a.length; 
         uint256[] memory dad = new uint256[](n); 
+        uint256[] memory sz = new uint256[](n); 
         uint256 tot = 0;
         for (uint256 i = 0; i < n; i++){
             dad[i] = i;
+            sz[i] = 1; 
             tot += a[i];
         }
 
@@ -29,7 +31,12 @@ contract Library is ILibrary, ISolution {
                 continue; 
             }
 
+            if (sz[x] > sz[y]){
+                (x, y) = (y, x); 
+            }
+
             dad[x] = y; 
+            sz[y] += sz[x]; 
             if (a[y] > a[x]){
                 tot -= a[y];
                 a[y] = a[x]; 
